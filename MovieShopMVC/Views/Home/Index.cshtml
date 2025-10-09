@@ -1,9 +1,20 @@
 ﻿@model List<ApplicationCore.Models.MovieCard>
 
-
-@foreach (var movie in Model)
-{
-    <div>@movie.Id</div>
-    <div>@movie.Title</div>
+@{
+    ViewData["Title"] = "Home Page";
 }
 
+<div class="rounded">
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var movie in Model)
+            {
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                  <partial name="_MovieCard" model="movie" />
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>

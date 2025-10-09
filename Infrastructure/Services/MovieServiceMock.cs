@@ -19,5 +19,10 @@ namespace Infrastructure.Services
             };
             return movies;
         }
+
+        public MovieDetailModel GetMovieDetails(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
