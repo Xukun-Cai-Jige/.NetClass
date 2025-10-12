@@ -19,9 +19,9 @@ namespace Infrastructure.Services
             _movieRepository = movieRepository;
         }
 
-        public List<MovieCard> Get30HighestGrossingMovies() 
+        public async Task<List<MovieCard>> Get30HighestGrossingMovies() 
         {
-            var movies = _movieRepository.Get30HighestGrossingMovies();
+            var movies = await _movieRepository.Get30HighestGrossingMovies();
             var movieCards = new List<MovieCard>();
             foreach (var movie in movies)
             {
@@ -30,9 +30,9 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public MovieDetailModel GetMovieDetails(int id)
+        public async Task<MovieDetailModel> GetMovieDetails(int id)
         {
-            var movie = _movieRepository.GetById(id);
+            var movie = await _movieRepository.GetById(id);
             var movieDetails = new MovieDetailModel
             {
                 Id = movie.Id,
@@ -69,6 +69,14 @@ namespace Infrastructure.Services
                 movieDetails.Casts.Add(new CastModel { Id = cast.CastId, Name = cast.Cast.Name, ProfilePath = cast.Cast.ProfilePath, Character = cast.Character });
             }
             return movieDetails;
+        }
+
+        public async Task<PagedReusltSet<MovieCard>> GetMoviesByGenrePagination(int genreId, int pageSize = 30, int pageNumber = 1)
+        {
+            var pagedMovies = await _movieRepository.GetMoviesByGenre(genreId, pageSize, pageNumber);
+            var movieCards = new List<MovieCard>();
+            movieCards.AddRange(pagedMovies.Data.Select(m => new MovieCard { Id = m.Id, Title = m.Title, PosterUrl = m.PosterUrl }));
+            return new PagedReusltSet<MovieCard>(movieCards, pageNumber, pagedMovies.PageSize, pagedMovies.Count);
         }
     }
 }
