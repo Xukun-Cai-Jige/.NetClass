@@ -20,6 +20,8 @@ namespace MovieShopMVC.Controllers
         //[Authorize]
         public async Task<IActionResult> Favorites()
         {
+
+            var userId = Convert.ToInt32(this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier));
             return View();
         }
     }
