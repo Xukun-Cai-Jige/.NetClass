@@ -1,1 +1,9 @@
-<p>home works!</p>
+<div class="rounded">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-lg-3 col-sm-4 col-xl-2" *ngFor="let movieCard of movies">
+                <app-movie-card [movieCard]="movieCard"></app-movie-card>
+            </div>
+        </div>
+    </div>
+</div>
